@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 19,
-  "iteration": 1568838736715,
+  "iteration": 1568843839250,
   "links": [],
   "panels": [
     {
@@ -25,6 +25,205 @@
         "w": 4,
         "x": 0,
         "y": 0
+      },
+      "id": 126,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 1,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0.8
+              }
+            ],
+            "title": "CPU node %",
+            "unit": "percentunit"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "6.3.3",
+      "targets": [
+        {
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"}\n      )",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "gauge"
+    },
+    {
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 127,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 1,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0.8
+              }
+            ],
+            "title": "CPU allocatable %",
+            "unit": "percentunit"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "6.3.3",
+      "targets": [
+        {
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\"}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores\n    * on (node) kube_node_labels{node=~\"$node\"})",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "prometheus",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 8,
+        "y": 0
+      },
+      "id": 135,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(kube_node_status_capacity_cpu_cores\n   * on (node) kube_node_labels{node=~\"$node\"}\n   )",
+          "legendFormat": "Total",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(kube_node_status_allocatable_cpu_cores\n   * on (node) kube_node_labels{node=~\"$node\"}\n   )",
+          "legendFormat": "Allocatable",
+          "refId": "B"
+        },
+        {
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"})\n    )",
+          "legendFormat": "Usage",
+          "refId": "C"
+        },
+        {
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\"}\n  )",
+          "legendFormat": "Usage allocatable",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "CPU",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "core",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 0,
+        "y": 5
       },
       "id": 73,
       "options": {
@@ -73,7 +272,7 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 0
+        "y": 5
       },
       "id": 95,
       "options": {
@@ -129,7 +328,7 @@
         "h": 5,
         "w": 9,
         "x": 8,
-        "y": 0
+        "y": 5
       },
       "id": 118,
       "legend": {
@@ -224,7 +423,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 10
       },
       "id": 4,
       "panels": [],
@@ -244,7 +443,7 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 6
+        "y": 11
       },
       "id": 10,
       "options": {
@@ -286,7 +485,7 @@
       },
       "targets": [
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n      )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"}\n      )",
           "refId": "A"
         }
       ],
@@ -300,7 +499,7 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 6
+        "y": 11
       },
       "id": 17,
       "options": {
@@ -342,7 +541,7 @@
       },
       "targets": [
         {
-          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores\n    * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"})",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\"}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores\n    * on (node) kube_node_labels{node=~\"$node\"})",
           "refId": "A"
         }
       ],
@@ -363,7 +562,7 @@
         "h": 5,
         "w": 9,
         "x": 8,
-        "y": 6
+        "y": 11
       },
       "id": 2,
       "legend": {
@@ -398,22 +597,22 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores\n* on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)",
+          "expr": "sum(kube_node_status_capacity_cpu_cores\n   * on (node) kube_node_labels{node=~\"$node\"}\n   )",
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum(\nkube_node_status_allocatable_cpu_cores\n* on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)",
+          "expr": "sum(kube_node_status_allocatable_cpu_cores\n   * on (node) kube_node_labels{node=~\"$node\"}\n   )",
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum( \nnode:node_cpu_utilisation:avg1m \n* (\nkube_node_status_capacity_cpu_cores \n* on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)\n) ",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"})\n    )",
           "legendFormat": "Usage",
           "refId": "C"
         },
         {
-          "expr": "sum (\nlabel_replace(\n  rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n  \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n)\n* on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:\n* on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\"}\n  )",
           "legendFormat": "Usage allocatable",
           "refId": "D"
         }
@@ -464,7 +663,7 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 11
+        "y": 16
       },
       "id": 27,
       "options": {
@@ -520,7 +719,7 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 11
+        "y": 16
       },
       "id": 38,
       "options": {
@@ -583,7 +782,7 @@
         "h": 5,
         "w": 9,
         "x": 8,
-        "y": 11
+        "y": 16
       },
       "id": 51,
       "legend": {
@@ -685,12 +884,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 21
       },
-      "id": 119,
+      "id": 136,
       "panels": [],
       "repeat": null,
-      "repeatIteration": 1568838736715,
+      "repeatIteration": 1568843839250,
       "repeatPanelId": 4,
       "scopedVars": {
         "node": {
@@ -707,9 +906,9 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 17
+        "y": 22
       },
-      "id": 120,
+      "id": 137,
       "options": {
         "fieldOptions": {
           "calcs": [
@@ -740,7 +939,7 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "6.3.3",
-      "repeatIteration": 1568838736715,
+      "repeatIteration": 1568843839250,
       "repeatPanelId": 10,
       "repeatedByRow": true,
       "scopedVars": {
@@ -752,7 +951,7 @@
       },
       "targets": [
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n      )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"}\n      )",
           "refId": "A"
         }
       ],
@@ -766,9 +965,9 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 17
+        "y": 22
       },
-      "id": 121,
+      "id": 138,
       "options": {
         "fieldOptions": {
           "calcs": [
@@ -799,7 +998,7 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "6.3.3",
-      "repeatIteration": 1568838736715,
+      "repeatIteration": 1568843839250,
       "repeatPanelId": 17,
       "repeatedByRow": true,
       "scopedVars": {
@@ -811,7 +1010,7 @@
       },
       "targets": [
         {
-          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores\n    * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"})",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\"}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores\n    * on (node) kube_node_labels{node=~\"$node\"})",
           "refId": "A"
         }
       ],
@@ -832,9 +1031,9 @@
         "h": 5,
         "w": 9,
         "x": 8,
-        "y": 17
+        "y": 22
       },
-      "id": 122,
+      "id": 139,
       "legend": {
         "avg": false,
         "current": false,
@@ -854,7 +1053,7 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "repeatIteration": 1568838736715,
+      "repeatIteration": 1568843839250,
       "repeatPanelId": 2,
       "repeatedByRow": true,
       "scopedVars": {
@@ -870,22 +1069,22 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores\n* on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)",
+          "expr": "sum(kube_node_status_capacity_cpu_cores\n   * on (node) kube_node_labels{node=~\"$node\"}\n   )",
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum(\nkube_node_status_allocatable_cpu_cores\n* on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)",
+          "expr": "sum(kube_node_status_allocatable_cpu_cores\n   * on (node) kube_node_labels{node=~\"$node\"}\n   )",
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum( \nnode:node_cpu_utilisation:avg1m \n* (\nkube_node_status_capacity_cpu_cores \n* on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)\n) ",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m * \n      (kube_node_status_capacity_cpu_cores * on (node) kube_node_labels{node=~\"$node\"})\n    )",
           "legendFormat": "Usage",
           "refId": "C"
         },
         {
-          "expr": "sum (\nlabel_replace(\n  rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n  \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n)\n* on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:\n* on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\"}\n)",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\"}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\"}\n  )",
           "legendFormat": "Usage allocatable",
           "refId": "D"
         }
@@ -936,9 +1135,9 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 22
+        "y": 27
       },
-      "id": 123,
+      "id": 140,
       "options": {
         "fieldOptions": {
           "calcs": [
@@ -969,7 +1168,7 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "6.3.3",
-      "repeatIteration": 1568838736715,
+      "repeatIteration": 1568843839250,
       "repeatPanelId": 27,
       "repeatedByRow": true,
       "scopedVars": {
@@ -995,9 +1194,9 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 22
+        "y": 27
       },
-      "id": 124,
+      "id": 141,
       "options": {
         "fieldOptions": {
           "calcs": [
@@ -1028,7 +1227,7 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "6.3.3",
-      "repeatIteration": 1568838736715,
+      "repeatIteration": 1568843839250,
       "repeatPanelId": 38,
       "repeatedByRow": true,
       "scopedVars": {
@@ -1061,9 +1260,9 @@
         "h": 5,
         "w": 9,
         "x": 8,
-        "y": 22
+        "y": 27
       },
-      "id": 125,
+      "id": 142,
       "legend": {
         "avg": false,
         "current": false,
@@ -1083,7 +1282,7 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "repeatIteration": 1568838736715,
+      "repeatIteration": 1568843839250,
       "repeatPanelId": 51,
       "repeatedByRow": true,
       "scopedVars": {
@@ -1169,7 +1368,6 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
           "text": "node1.dtcc-e7cf.internal + node2.dtcc-e7cf.internal",
           "value": [
             "node1.dtcc-e7cf.internal",
@@ -1244,5 +1442,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "_JHxE7pWz",
-  "version": 15
+  "version": 22
 }
