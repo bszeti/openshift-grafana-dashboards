@@ -95,7 +95,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n      )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{[[filter_by_cluster ]]} * on (node) \n      (kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]} * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]} * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n      )",
           "refId": "A"
         }
       ],
@@ -144,7 +144,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",{% filter_by_cluster %}}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores{{% filter_by_cluster %}}\n    * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",[[filter_by_cluster ]]}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores{[[filter_by_cluster ]]}\n    * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]})",
           "refId": "A"
         }
       ],
@@ -192,22 +192,22 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n   )",
+          "expr": "sum(kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n   )",
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_allocatable_cpu_cores{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n   )",
+          "expr": "sum(kube_node_status_allocatable_cpu_cores{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n   )",
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{[[filter_by_cluster ]]} * on (node) \n      (kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]} * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]})\n    )",
           "legendFormat": "Usage",
           "refId": "C"
         },
         {
-          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",{% filter_by_cluster %}}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",[[filter_by_cluster ]]}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Usage allocatable",
           "refId": "D"
         }
@@ -293,7 +293,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum(\n    (node_memory_MemTotal_bytes{{% filter_by_cluster %}} - node_memory_MemAvailable_bytes{{% filter_by_cluster %}})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )\n  / sum( node:node_memory_bytes_total:sum{node=~\"$node\",{% filter_by_cluster %}} )",
+          "expr": "sum(\n    (node_memory_MemTotal_bytes{[[filter_by_cluster ]]} - node_memory_MemAvailable_bytes{[[filter_by_cluster ]]})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )\n  / sum( node:node_memory_bytes_total:sum{node=~\"$node\",[[filter_by_cluster ]]} )",
           "refId": "A"
         }
       ],
@@ -342,7 +342,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",{% filter_by_cluster %}}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )\n  / sum (kube_node_status_allocatable_memory_bytes{node=~\"$node\",{% filter_by_cluster %}})",
+          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",[[filter_by_cluster ]]}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )\n  / sum (kube_node_status_allocatable_memory_bytes{node=~\"$node\",[[filter_by_cluster ]]})",
           "refId": "A"
         }
       ],
@@ -390,22 +390,22 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum( kube_node_status_capacity_memory_bytes{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum( kube_node_status_capacity_memory_bytes{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum( kube_node_status_allocatable_memory_bytes{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum( kube_node_status_allocatable_memory_bytes{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum(\n    (node_memory_MemTotal_bytes{{% filter_by_cluster %}} - node_memory_MemAvailable_bytes{{% filter_by_cluster %}})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum(\n    (node_memory_MemTotal_bytes{[[filter_by_cluster ]]} - node_memory_MemAvailable_bytes{[[filter_by_cluster ]]})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Usage",
           "refId": "C"
         },
         {
-          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",{% filter_by_cluster %}}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",[[filter_by_cluster ]]}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Usage allocatable",
           "refId": "D"
         }
@@ -505,7 +505,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n      )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{[[filter_by_cluster ]]} * on (node) \n      (kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]} * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]} * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n      )",
           "refId": "A"
         }
       ],
@@ -554,7 +554,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",{% filter_by_cluster %}}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores{{% filter_by_cluster %}}\n    * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",[[filter_by_cluster ]]}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )\n  / sum (\n    kube_node_status_allocatable_cpu_cores{[[filter_by_cluster ]]}\n    * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]})",
           "refId": "A"
         }
       ],
@@ -602,22 +602,22 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n   )",
+          "expr": "sum(kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n   )",
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_allocatable_cpu_cores{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n   )",
+          "expr": "sum(kube_node_status_allocatable_cpu_cores{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n   )",
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{[[filter_by_cluster ]]} * on (node) \n      (kube_node_status_capacity_cpu_cores{[[filter_by_cluster ]]} * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]})\n    )",
           "legendFormat": "Usage",
           "refId": "C"
         },
         {
-          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",{% filter_by_cluster %}}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum (\n    label_replace(\n      rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",[[filter_by_cluster ]]}[5m]),\n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Usage allocatable",
           "refId": "D"
         }
@@ -703,7 +703,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum(\n    (node_memory_MemTotal_bytes{{% filter_by_cluster %}} - node_memory_MemAvailable_bytes{{% filter_by_cluster %}})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )\n  / sum( node:node_memory_bytes_total:sum{node=~\"$node\",{% filter_by_cluster %}} )",
+          "expr": "sum(\n    (node_memory_MemTotal_bytes{[[filter_by_cluster ]]} - node_memory_MemAvailable_bytes{[[filter_by_cluster ]]})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )\n  / sum( node:node_memory_bytes_total:sum{node=~\"$node\",[[filter_by_cluster ]]} )",
           "refId": "A"
         }
       ],
@@ -752,7 +752,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",{% filter_by_cluster %}}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )\n  / sum (kube_node_status_allocatable_memory_bytes{node=~\"$node\",{% filter_by_cluster %}})",
+          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",[[filter_by_cluster ]]}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )\n  / sum (kube_node_status_allocatable_memory_bytes{node=~\"$node\",[[filter_by_cluster ]]})",
           "refId": "A"
         }
       ],
@@ -800,22 +800,22 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum( kube_node_status_capacity_memory_bytes{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum( kube_node_status_capacity_memory_bytes{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum( kube_node_status_allocatable_memory_bytes{{% filter_by_cluster %}}\n   * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum( kube_node_status_allocatable_memory_bytes{[[filter_by_cluster ]]}\n   * on (node) kube_node_labels{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum(\n    (node_memory_MemTotal_bytes{{% filter_by_cluster %}} - node_memory_MemAvailable_bytes{{% filter_by_cluster %}})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum(\n    (node_memory_MemTotal_bytes{[[filter_by_cluster ]]} - node_memory_MemAvailable_bytes{[[filter_by_cluster ]]})\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Usage",
           "refId": "C"
         },
         {
-          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",{% filter_by_cluster %}}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",{% filter_by_cluster %}}\n  )",
+          "expr": "sum(\n    label_replace(\n      container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",[[filter_by_cluster ]]}, \n      \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",[[filter_by_cluster ]]}\n  )",
           "legendFormat": "Usage allocatable",
           "refId": "D"
         }
@@ -892,14 +892,14 @@
       {
         "allValue": null,
         "current": {},
-        "definition": "label_values(kube_node_labels{{% filter_by_cluster %}},node)",
+        "definition": "label_values(kube_node_labels{[[filter_by_cluster ]]},node)",
         "hide": 0,
         "includeAll": true,
         "label": "Node",
         "multi": true,
         "name": "node",
         "options": [],
-        "query": "label_values(kube_node_labels{{% filter_by_cluster %}},node)",
+        "query": "label_values(kube_node_labels{[[filter_by_cluster ]]},node)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
