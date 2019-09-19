@@ -158,7 +158,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -357,7 +356,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -570,7 +568,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -769,7 +766,6 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -875,7 +871,6 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(kube_pod_info,cluster)",
         "hide": 0,
         "includeAll": false,
@@ -897,15 +892,14 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
-        "definition": "label_values(kube_node_labels{cluster=\"$Cluster\"},node)",
+        "definition": "label_values(kube_node_labels{{% filter_by_cluster %}},node)",
         "hide": 0,
         "includeAll": true,
         "label": "Node",
         "multi": true,
         "name": "node",
         "options": [],
-        "query": "label_values(kube_node_labels{cluster=\"$Cluster\"},node)",
+        "query": "label_values(kube_node_labels{{% filter_by_cluster %}},node)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -938,6 +932,6 @@
   },
   "timezone": "",
   "title": "Summary by node",
-  "uid": "_JHxE7pWz",
+  "uid": "summary-by-node",
   "version": 22
 }
