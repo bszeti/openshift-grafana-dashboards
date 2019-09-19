@@ -95,7 +95,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n      )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n      )",
           "refId": "A"
         }
       ],
@@ -203,7 +203,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )",
           "legendFormat": "Usage",
           "refId": "C"
         },
@@ -507,7 +507,7 @@
       "pluginVersion": "6.3.3",
       "targets": [
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n      )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )\n    / \n    sum(\n      kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}}\n      )",
           "refId": "A"
         }
       ],
@@ -615,7 +615,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )",
+          "expr": "sum( \n      node:node_cpu_utilisation:avg1m{{% filter_by_cluster %}} * on (node) \n      (kube_node_status_capacity_cpu_cores{{% filter_by_cluster %}} * on (node) kube_node_labels{node=~\"$node\",{% filter_by_cluster %}})\n    )",
           "legendFormat": "Usage",
           "refId": "C"
         },
