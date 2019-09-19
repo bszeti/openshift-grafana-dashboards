@@ -905,7 +905,7 @@
         "multi": true,
         "name": "node",
         "options": [],
-        "query": "label_values(kube_node_labels,node)",
+        "query": "label_values(kube_node_labels{cluster=\"$Cluster\"},node)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
