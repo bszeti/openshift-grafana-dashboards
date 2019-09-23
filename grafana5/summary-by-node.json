@@ -1152,7 +1152,6 @@
         {
           "allValue": null,
           "current": {},
-          "datasource": "prometheus",
           "definition": "label_values(kube_pod_info,cluster)",
           "hide": 0,
           "includeAll": false,
@@ -1174,7 +1173,6 @@
         {
           "allValue": null,
           "current": {},
-          "datasource": "prometheus",
           "definition": "label_values(kube_node_labels{cluster=\"$Cluster\"},node)",
           "hide": 0,
           "includeAll": true,
@@ -1226,6 +1224,6 @@
     },
     "timezone": "",
     "title": "Summary by node",
-    "uid": "2ZSqDxpZz",
+    "uid": "summary-by-node",
     "version": 8
   }
