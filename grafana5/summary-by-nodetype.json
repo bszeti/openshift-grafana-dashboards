@@ -52,7 +52,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": null,
-    "iteration": 1569264448187,
+    "iteration": 1569284435964,
     "links": [],
     "panels": [
       {
@@ -81,7 +81,7 @@
         "decimals": 1,
         "format": "percentunit",
         "gauge": {
-          "maxValue": 100,
+          "maxValue": 1,
           "minValue": 0,
           "show": true,
           "thresholdLabels": false,
@@ -136,7 +136,7 @@
             "refId": "A"
           }
         ],
-        "thresholds": "80,90",
+        "thresholds": "0.8,0.9",
         "title": "CPU node %",
         "type": "singlestat",
         "valueFontSize": "80%",
@@ -161,7 +161,7 @@
         "decimals": 1,
         "format": "percentunit",
         "gauge": {
-          "maxValue": 100,
+          "maxValue": 1,
           "minValue": 0,
           "show": true,
           "thresholdLabels": false,
@@ -216,8 +216,168 @@
             "refId": "A"
           }
         ],
-        "thresholds": "80,90",
-        "title": "CPU allocatable %",
+        "thresholds": "0.8,0.9",
+        "title": "CPU usage/allocatable %",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "current"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "decimals": 1,
+        "format": "percentunit",
+        "gauge": {
+          "maxValue": 2,
+          "minValue": 0,
+          "show": true,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 8,
+          "y": 1
+        },
+        "id": 102,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "expr": "sum (    \n    label_replace(      \n        rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",cluster=\"$Cluster\"}[5m]),        \n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"    \n        )   \n        * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{cluster=\"$Cluster\"}    \n        * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}  \n)\n/\nsum(    \n    kube_pod_container_resource_requests_cpu_cores{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}   \n)",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "refId": "A"
+          }
+        ],
+        "thresholds": "1,2",
+        "title": "CPU usage/request %",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "current"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "decimals": 1,
+        "format": "percentunit",
+        "gauge": {
+          "maxValue": 1,
+          "minValue": 0,
+          "show": true,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 12,
+          "y": 1
+        },
+        "id": 123,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "expr": "sum(    \n    kube_pod_container_resource_requests_cpu_cores{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}   \n)\n/ \nsum (    \n    kube_node_status_allocatable_cpu_cores{cluster=\"$Cluster\"}    \n    * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n    )",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "refId": "A"
+          }
+        ],
+        "thresholds": "0.8,0.9",
+        "title": "CPU request/allocatable %",
         "type": "singlestat",
         "valueFontSize": "80%",
         "valueMaps": [
@@ -237,8 +397,8 @@
         "fill": 1,
         "gridPos": {
           "h": 6,
-          "w": 12,
-          "x": 8,
+          "w": 8,
+          "x": 16,
           "y": 1
         },
         "id": 37,
@@ -282,15 +442,22 @@
             "expr": "sum( \n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} \n    * on (node) (\n        kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"} \n        * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n        )\n) ",
             "format": "time_series",
             "intervalFactor": 1,
-            "legendFormat": "Usage",
+            "legendFormat": "Node usage",
             "refId": "C"
           },
           {
             "expr": "sum (\nlabel_replace(  \n    rate(container_cpu_usage_seconds_total{job=\"kubelet\", image!=\"\", container_name!=\"\",cluster=\"$Cluster\"}[5m]),  \n    \"pod\", \"$1\", \"pod_name\", \"(.*)\"\n)\n* on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{cluster=\"$Cluster\"}\n* on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n)",
             "format": "time_series",
             "intervalFactor": 1,
-            "legendFormat": "Usage allocatable",
+            "legendFormat": "Usage",
             "refId": "D"
+          },
+          {
+            "expr": "sum(    \n    kube_pod_container_resource_requests_cpu_cores{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}   \n)",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "Request",
+            "refId": "E"
           }
         ],
         "thresholds": [],
@@ -347,7 +514,7 @@
         "decimals": 1,
         "format": "percentunit",
         "gauge": {
-          "maxValue": 100,
+          "maxValue": 1,
           "minValue": 0,
           "show": true,
           "thresholdLabels": false,
@@ -402,7 +569,7 @@
             "refId": "A"
           }
         ],
-        "thresholds": "80,90",
+        "thresholds": "0.8,0.9",
         "title": "Memory node %",
         "type": "singlestat",
         "valueFontSize": "80%",
@@ -427,7 +594,7 @@
         "decimals": 1,
         "format": "percentunit",
         "gauge": {
-          "maxValue": 100,
+          "maxValue": 1,
           "minValue": 0,
           "show": true,
           "thresholdLabels": false,
@@ -482,8 +649,168 @@
             "refId": "A"
           }
         ],
-        "thresholds": "80,90",
+        "thresholds": "0.8,0.9",
         "title": "Memory allocatable %",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "current"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "decimals": 1,
+        "format": "percentunit",
+        "gauge": {
+          "maxValue": 2,
+          "minValue": 0,
+          "show": true,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 8,
+          "y": 7
+        },
+        "id": 66,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "expr": "sum (    \n    label_replace(      \n        container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",cluster=\"$Cluster\"},      \n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"    )    \n        * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{cluster=\"$Cluster\"}    \n        * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}  \n    )  \n/\nsum(    \n    kube_pod_container_resource_requests_memory_bytes{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}       \n)",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "refId": "A"
+          }
+        ],
+        "thresholds": "1,2",
+        "title": "Memory usage/request %",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+          {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+          }
+        ],
+        "valueName": "current"
+      },
+      {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": false,
+        "colors": [
+          "#299c46",
+          "rgba(237, 129, 40, 0.89)",
+          "#d44a3a"
+        ],
+        "decimals": 1,
+        "format": "percentunit",
+        "gauge": {
+          "maxValue": 1,
+          "minValue": 0,
+          "show": true,
+          "thresholdLabels": false,
+          "thresholdMarkers": true
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 12,
+          "y": 7
+        },
+        "id": 83,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+          {
+            "name": "value to text",
+            "value": 1
+          },
+          {
+            "name": "range to text",
+            "value": 2
+          }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+          {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+          }
+        ],
+        "sparkline": {
+          "fillColor": "rgba(31, 118, 189, 0.18)",
+          "full": false,
+          "lineColor": "rgb(31, 120, 193)",
+          "show": false
+        },
+        "tableColumn": "",
+        "targets": [
+          {
+            "expr": "sum(    \n    kube_pod_container_resource_requests_memory_bytes{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}       \n    )\n/\nsum (    \n    kube_node_status_allocatable_memory_bytes{cluster=\"$Cluster\"}    \n    * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n    )",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "refId": "A"
+          }
+        ],
+        "thresholds": "0.8,0.9",
+        "title": "Memory request/allocatable %",
         "type": "singlestat",
         "valueFontSize": "80%",
         "valueMaps": [
@@ -503,8 +830,8 @@
         "fill": 1,
         "gridPos": {
           "h": 6,
-          "w": 12,
-          "x": 8,
+          "w": 8,
+          "x": 16,
           "y": 7
         },
         "id": 51,
@@ -548,15 +875,22 @@
             "expr": "sum(     \n    (node_memory_MemTotal_bytes{cluster=\"$Cluster\"} - node_memory_MemAvailable_bytes{cluster=\"$Cluster\"})    \n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{cluster=\"$Cluster\"}    \n    * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}  \n)",
             "format": "time_series",
             "intervalFactor": 1,
-            "legendFormat": "Usage",
+            "legendFormat": "Node usage",
             "refId": "C"
           },
           {
             "expr": "sum (    \n    label_replace(      \n        container_memory_usage_bytes{pod_name!=\"\",container_name=\"\",cluster=\"$Cluster\"},      \n        \"pod\", \"$1\", \"pod_name\", \"(.*)\"    \n    )    \n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{cluster=\"$Cluster\"}    \n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}  \n)",
             "format": "time_series",
             "intervalFactor": 1,
-            "legendFormat": "Usage allocatable",
+            "legendFormat": "Usage",
             "refId": "D"
+          },
+          {
+            "expr": "sum(    \n    kube_pod_container_resource_requests_memory_bytes{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}       \n)",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "Request",
+            "refId": "E"
           }
         ],
         "thresholds": [],
@@ -609,36 +943,31 @@
         {
           "allValue": "",
           "current": {
-            "selected": true,
-            "tags": [],
-            "text": "All",
+            "text": "master + infra + compute",
             "value": [
-              "$__all"
+              "master",
+              "infra",
+              "compute"
             ]
           },
           "hide": 0,
-          "includeAll": true,
+          "includeAll": false,
           "label": "Node type",
           "multi": true,
           "name": "nodetype",
           "options": [
             {
               "selected": true,
-              "text": "All",
-              "value": "$__all"
-            },
-            {
-              "selected": false,
               "text": "master",
               "value": "master"
             },
             {
-              "selected": false,
+              "selected": true,
               "text": "infra",
               "value": "infra"
             },
             {
-              "selected": false,
+              "selected": true,
               "text": "compute",
               "value": "compute"
             }
@@ -650,6 +979,7 @@
         {
           "allValue": null,
           "current": {},
+          "datasource": "prometheus",
           "definition": "label_values(kube_pod_info,cluster)",
           "hide": 0,
           "includeAll": false,
@@ -657,7 +987,7 @@
           "multi": false,
           "name": "Cluster",
           "options": [],
-          "query": "",
+          "query": "label_values(kube_pod_info,cluster)",
           "refresh": 1,
           "regex": "",
           "skipUrlSync": false,
@@ -702,5 +1032,5 @@
     "timezone": "",
     "title": "Summary by node type",
     "uid": "summary-by-nodetype",
-    "version": 19
+    "version": 31
   }
