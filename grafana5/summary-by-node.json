@@ -52,7 +52,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569282280515,
+  "iteration": 1569426626685,
   "links": [],
   "panels": [
     {
@@ -934,12 +934,110 @@
       }
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 38,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(\n    node:node_net_utilisation:sum_irate{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Total",
+          "refId": "A"
+        },
+        {
+          "expr": "sum (\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Receive",
+          "refId": "B"
+        },
+        {
+          "expr": "sum (\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Send",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Network",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "Bps",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 18
       },
       "id": 10,
       "panels": [],
@@ -969,7 +1067,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 14
+        "y": 19
       },
       "id": 13,
       "interval": null,
@@ -1049,7 +1147,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 14
+        "y": 19
       },
       "id": 14,
       "interval": null,
@@ -1129,7 +1227,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 14
+        "y": 19
       },
       "id": 24,
       "interval": null,
@@ -1209,7 +1307,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 14
+        "y": 19
       },
       "id": 25,
       "interval": null,
@@ -1277,7 +1375,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 14
+        "y": 19
       },
       "id": 18,
       "legend": {
@@ -1401,7 +1499,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 20
+        "y": 25
       },
       "id": 16,
       "interval": null,
@@ -1481,7 +1579,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 20
+        "y": 25
       },
       "id": 17,
       "interval": null,
@@ -1561,7 +1659,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 20
+        "y": 25
       },
       "id": 35,
       "interval": null,
@@ -1641,7 +1739,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 20
+        "y": 25
       },
       "id": 36,
       "interval": null,
@@ -1709,7 +1807,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 20
+        "y": 25
       },
       "id": 19,
       "legend": {
@@ -1792,6 +1890,104 @@
         {
           "format": "decbytes",
           "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 31
+      },
+      "id": 39,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(\n    node:node_net_utilisation:sum_irate{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Total",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Receive",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Send",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Network",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "Bps",
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -1895,5 +2091,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "summary-by-node",
-  "version": 2
+  "version": 6
 }
