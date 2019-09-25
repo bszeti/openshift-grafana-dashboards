@@ -1,13 +1,5 @@
 {
-  "__inputs": [
-    {
-      "name": "VAR_DATASOURCE",
-      "type": "constant",
-      "label": "datasource",
-      "value": "prometheus",
-      "description": ""
-    }
-  ],
+  "__inputs": [],
   "__requires": [
     {
       "type": "grafana",
@@ -2057,22 +2049,26 @@
         "useTags": false
       },
       {
+        "allValue": null,
         "current": {
-          "value": "${VAR_DATASOURCE}",
-          "text": "${VAR_DATASOURCE}"
+          "text": "prometheus",
+          "value": "prometheus"
         },
         "hide": 0,
+        "includeAll": false,
         "label": null,
+        "multi": false,
         "name": "datasource",
         "options": [
           {
-            "value": "${VAR_DATASOURCE}",
-            "text": "${VAR_DATASOURCE}"
+            "selected": true,
+            "text": "prometheus",
+            "value": "prometheus"
           }
         ],
-        "query": "${VAR_DATASOURCE}",
+        "query": "prometheus",
         "skipUrlSync": false,
-        "type": "constant"
+        "type": "custom"
       }
     ]
   },
