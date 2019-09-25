@@ -1,12 +1,11 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
-      "label": "prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
+      "name": "VAR_DATASOURCE",
+      "type": "constant",
+      "label": "datasource",
+      "value": "prometheus",
+      "description": ""
     }
   ],
   "__requires": [
@@ -52,7 +51,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569426626685,
+  "iteration": 1569426823207,
   "links": [],
   "panels": [
     {
@@ -2016,7 +2015,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(kube_pod_info,cluster)",
         "hide": 0,
         "includeAll": false,
@@ -2038,7 +2037,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(kube_node_labels{cluster=\"$Cluster\"},node)",
         "hide": 0,
         "includeAll": true,
@@ -2056,6 +2055,24 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "value": "${VAR_DATASOURCE}",
+          "text": "${VAR_DATASOURCE}"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "datasource",
+        "options": [
+          {
+            "value": "${VAR_DATASOURCE}",
+            "text": "${VAR_DATASOURCE}"
+          }
+        ],
+        "query": "${VAR_DATASOURCE}",
+        "skipUrlSync": false,
+        "type": "constant"
       }
     ]
   },
@@ -2091,5 +2108,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "summary-by-node",
-  "version": 6
+  "version": 8
 }
