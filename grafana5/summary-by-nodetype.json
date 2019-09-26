@@ -69,6 +69,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -149,6 +150,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -229,6 +231,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -309,6 +312,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -385,6 +389,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -502,6 +507,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -582,6 +588,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -662,6 +669,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -742,6 +750,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -818,6 +827,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -930,6 +940,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -1075,26 +1086,20 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
+          "tags": [],
           "text": "prometheus",
           "value": "prometheus"
         },
         "hide": 0,
-        "includeAll": false,
         "label": null,
-        "multi": false,
         "name": "datasource",
-        "options": [
-          {
-            "selected": true,
-            "text": "prometheus",
-            "value": "prometheus"
-          }
-        ],
+        "options": [],
         "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
         "skipUrlSync": false,
-        "type": "custom"
+        "type": "datasource"
       }
     ]
   },

@@ -43,7 +43,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569426823207,
+  "iteration": 1569527005155,
   "links": [],
   "panels": [
     {
@@ -56,7 +56,7 @@
       },
       "id": 12,
       "panels": [],
-      "title": "Selected nodes",
+      "title": "Totals for selected nodes",
       "type": "row"
     },
     {
@@ -68,6 +68,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -148,6 +149,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -228,6 +230,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -308,6 +311,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -384,6 +388,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -501,6 +506,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -581,6 +587,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -661,6 +668,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -741,6 +749,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -817,6 +826,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -929,6 +939,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -1045,6 +1056,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1125,6 +1137,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1205,6 +1218,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1285,6 +1299,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1361,6 +1376,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -1477,6 +1493,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1557,6 +1574,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1637,6 +1655,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1717,6 +1736,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
+      "datasource": "$datasource",
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
@@ -1793,6 +1813,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 6,
@@ -1905,6 +1926,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "$datasource",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -2049,26 +2071,20 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
+          "tags": [],
           "text": "prometheus",
           "value": "prometheus"
         },
         "hide": 0,
-        "includeAll": false,
         "label": null,
-        "multi": false,
         "name": "datasource",
-        "options": [
-          {
-            "selected": true,
-            "text": "prometheus",
-            "value": "prometheus"
-          }
-        ],
+        "options": [],
         "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
         "skipUrlSync": false,
-        "type": "custom"
+        "type": "datasource"
       }
     ]
   },
@@ -2104,5 +2120,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "summary-by-node",
-  "version": 8
+  "version": 2
 }
