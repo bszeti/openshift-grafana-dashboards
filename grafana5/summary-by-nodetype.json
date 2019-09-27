@@ -24,6 +24,12 @@
       "id": "singlestat",
       "name": "Singlestat",
       "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": "5.0.0"
     }
   ],
   "annotations": {
@@ -43,16 +49,150 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569557304586,
+  "iteration": 1569598211966,
   "links": [],
   "panels": [
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "$datasource",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 404,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "count(max(kube_node_status_condition{status=\"true\",condition!=\"Ready\",cluster=\"$Cluster\"} > 0) by (node))",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0,1",
+      "title": "Unhealty nodes",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "OK",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "columns": [],
+      "datasource": "$datasource",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 4,
+        "y": 0
+      },
+      "id": 444,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 2,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "max(kube_node_status_condition{status=\"true\",condition!=\"Ready\",cluster=\"$Cluster\"} > 0) by (node,condition)",
+          "format": "table",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "Node issues",
+      "transform": "table",
+      "type": "table"
+    },
     {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 5
       },
       "id": 2,
       "panels": [],
@@ -83,7 +223,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 1
+        "y": 6
       },
       "id": 4,
       "interval": null,
@@ -164,7 +304,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 1
+        "y": 6
       },
       "id": 9,
       "interval": null,
@@ -245,7 +385,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 1
+        "y": 6
       },
       "id": 102,
       "interval": null,
@@ -326,7 +466,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 1
+        "y": 6
       },
       "id": 123,
       "interval": null,
@@ -407,7 +547,7 @@
         "h": 6,
         "w": 4,
         "x": 16,
-        "y": 1
+        "y": 6
       },
       "id": 172,
       "interval": null,
@@ -476,7 +616,7 @@
         "h": 6,
         "w": 4,
         "x": 20,
-        "y": 1
+        "y": 6
       },
       "id": 37,
       "legend": {
@@ -616,7 +756,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 7
+        "y": 12
       },
       "id": 16,
       "interval": null,
@@ -697,7 +837,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 7
+        "y": 12
       },
       "id": 25,
       "interval": null,
@@ -778,7 +918,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 7
+        "y": 12
       },
       "id": 66,
       "interval": null,
@@ -859,7 +999,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 7
+        "y": 12
       },
       "id": 83,
       "interval": null,
@@ -940,7 +1080,7 @@
         "h": 6,
         "w": 4,
         "x": 16,
-        "y": 7
+        "y": 12
       },
       "id": 199,
       "interval": null,
@@ -1009,7 +1149,7 @@
         "h": 6,
         "w": 4,
         "x": 20,
-        "y": 7
+        "y": 12
       },
       "id": 51,
       "legend": {
@@ -1129,7 +1269,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 13
+        "y": 18
       },
       "id": 147,
       "legend": {
@@ -1215,7 +1355,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 13
+        "y": 18
       },
       "id": 228,
       "legend": {
@@ -1301,7 +1441,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 13
+        "y": 18
       },
       "id": 259,
       "legend": {
@@ -1387,7 +1527,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 19
+        "y": 24
       },
       "id": 292,
       "legend": {
@@ -1473,7 +1613,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 19
+        "y": 24
       },
       "id": 327,
       "legend": {
@@ -1559,7 +1699,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 19
+        "y": 24
       },
       "id": 364,
       "legend": {
@@ -1616,6 +1756,178 @@
         {
           "format": "percentunit",
           "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "fill": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 30
+      },
+      "id": 446,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (node) (\n  kube_pod_info{cluster=\"$Cluster\"}\n  * on (namespace, pod) group_left kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}\n  * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Pods ready",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "fill": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 30
+      },
+      "id": 487,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (phase) (    \n    ( kube_pod_status_phase{cluster=\"$Cluster\"}\n      or\n      label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{cluster=\"$Cluster\"} \n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n) ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{phase}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Pods phase",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": null,
           "logBase": 1,
           "max": null,
           "min": "0",
@@ -1717,7 +2029,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1748,5 +2060,5 @@
   "timezone": "",
   "title": "Summary by node type",
   "uid": "summary-by-nodetype",
-  "version": 14
+  "version": 32
 }
