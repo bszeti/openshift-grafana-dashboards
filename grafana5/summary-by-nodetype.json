@@ -43,7 +43,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569426984078,
+  "iteration": 1569552530927,
   "links": [],
   "panels": [
     {
@@ -385,6 +385,87 @@
       "valueName": "current"
     },
     {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "$datasource",
+      "decimals": 1,
+      "format": "percentunit",
+      "gauge": {
+        "maxValue": 1,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "id": 172,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum(    \n    kube_pod_container_resource_limits_cpu_cores{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}   \n)\n/ \nsum (    \n    kube_node_status_allocatable_cpu_cores{cluster=\"$Cluster\"}    \n    * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n    )",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.8,0.9",
+      "title": "CPU limits/allocatable %",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -393,8 +474,8 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 8,
-        "x": 16,
+        "w": 4,
+        "x": 20,
         "y": 1
       },
       "id": 37,
@@ -454,6 +535,20 @@
           "intervalFactor": 1,
           "legendFormat": "Request",
           "refId": "E"
+        },
+        {
+          "expr": "sum(    \n    kube_pod_container_resource_limits_cpu_cores{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}   \n)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Limits",
+          "refId": "F"
+        },
+        {
+          "expr": "",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "G"
         }
       ],
       "thresholds": [],
@@ -823,6 +918,87 @@
       "valueName": "current"
     },
     {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "$datasource",
+      "decimals": 1,
+      "format": "percentunit",
+      "gauge": {
+        "maxValue": 1,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 7
+      },
+      "id": 199,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum(    \n    kube_pod_container_resource_limits_memory_bytes{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}       \n    )\n/\nsum (    \n    kube_node_status_allocatable_memory_bytes{cluster=\"$Cluster\"}    \n    * on (node) kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n    )",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0.8,0.9",
+      "title": "Memory limits/allocatable %",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -831,8 +1007,8 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 8,
-        "x": 16,
+        "w": 4,
+        "x": 20,
         "y": 7
       },
       "id": 51,
@@ -892,6 +1068,13 @@
           "intervalFactor": 1,
           "legendFormat": "Request",
           "refId": "E"
+        },
+        {
+          "expr": "sum(       \n    kube_pod_container_resource_limits_memory_bytes{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}      \n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Limits",
+          "refId": "F"
         }
       ],
       "thresholds": [],
@@ -1087,7 +1270,6 @@
       },
       {
         "current": {
-          "tags": [],
           "text": "prometheus",
           "value": "prometheus"
         },
@@ -1135,5 +1317,5 @@
   "timezone": "",
   "title": "Summary by node type",
   "uid": "summary-by-nodetype",
-  "version": 7
+  "version": 4
 }
