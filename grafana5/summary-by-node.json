@@ -43,7 +43,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569552601820,
+  "iteration": 1569552601823,
   "links": [],
   "panels": [
     {
@@ -2318,14 +2318,14 @@
           "refId": "A"
         },
         {
-          "expr": "sum(\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum(\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[5m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Receive",
           "refId": "B"
         },
         {
-          "expr": "sum(\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum(\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[5m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Send",
@@ -2356,7 +2356,7 @@
           "label": "",
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -2442,7 +2442,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -2473,5 +2473,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "summary-by-node",
-  "version": 5
+  "version": 7
 }
