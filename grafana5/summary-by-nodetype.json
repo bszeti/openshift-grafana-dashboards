@@ -49,7 +49,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569875655148,
+  "iteration": 1569876999182,
   "links": [],
   "panels": [
     {
@@ -461,7 +461,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 2,
+        "maxValue": 3,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -516,7 +516,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "1,2",
+      "thresholds": "2,2.5",
       "title": "CPU usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -623,7 +623,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 1,
+        "maxValue": 5,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -678,7 +678,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.8,0.9",
+      "thresholds": "3,4",
       "title": "CPU limits/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -994,7 +994,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 2,
+        "maxValue": 3,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -1049,7 +1049,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "1,2",
+      "thresholds": "2,2.5",
       "title": "Memory usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1156,7 +1156,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 1,
+        "maxValue": 5,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -1211,7 +1211,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.8,0.9",
+      "thresholds": "3,4",
       "title": "Memory limits/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -2150,7 +2150,6 @@
       {
         "allValue": "",
         "current": {
-          "tags": [],
           "text": "master + infra + compute",
           "value": [
             "master",
@@ -2186,6 +2185,7 @@
       },
       {
         "current": {
+          "selected": true,
           "text": "prometheus",
           "value": "prometheus"
         },
@@ -2233,5 +2233,5 @@
   "timezone": "",
   "title": "Summary by node type",
   "uid": "summary-by-nodetype",
-  "version": 40
+  "version": 41
 }

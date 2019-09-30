@@ -55,7 +55,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569876294352,
+  "iteration": 1569876294355,
   "links": [],
   "panels": [
     {
@@ -471,7 +471,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 2,
+        "maxValue": 3,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -526,7 +526,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "1,2",
+      "thresholds": "2,2.5",
       "title": "CPU usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -607,7 +607,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.80,0.90",
+      "thresholds": "0.8,0.9",
       "title": "CPU  requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -633,7 +633,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 1,
+        "maxValue": 5,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -688,7 +688,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.80,0.90",
+      "thresholds": "3,4",
       "title": "CPU limits/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -997,7 +997,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 2,
+        "maxValue": 3,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -1052,7 +1052,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "1,2",
+      "thresholds": "2,2.5",
       "title": "Memory usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1133,7 +1133,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.80,0.90",
+      "thresholds": "0.8,0.9",
       "title": "Memory requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -1159,7 +1159,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 1,
+        "maxValue": 5,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -1214,7 +1214,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.80,0.90",
+      "thresholds": "3,4",
       "title": "Memory limits/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -2050,7 +2050,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 2,
+        "maxValue": 3,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -2105,7 +2105,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "1,2",
+      "thresholds": "2,2.5",
       "title": "CPU usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -2212,7 +2212,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 1,
+        "maxValue": 5,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -2267,7 +2267,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.80,0.90",
+      "thresholds": "3,4",
       "title": "CPU limits/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -2576,7 +2576,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 2,
+        "maxValue": 3,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -2631,7 +2631,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "1,2",
+      "thresholds": "2,2.5",
       "title": "Memory usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -2738,7 +2738,7 @@
       "decimals": 1,
       "format": "percentunit",
       "gauge": {
-        "maxValue": 1,
+        "maxValue": 5,
         "minValue": 0,
         "show": true,
         "thresholdLabels": false,
@@ -2793,7 +2793,7 @@
           "refId": "A"
         }
       ],
-      "thresholds": "0.80,0.90",
+      "thresholds": "3,4",
       "title": "Memory limits/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
@@ -3387,5 +3387,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "summary-by-node",
-  "version": 35
+  "version": 36
 }
