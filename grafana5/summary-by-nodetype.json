@@ -49,9 +49,95 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569601599589,
+  "iteration": 1569875655148,
   "links": [],
   "panels": [
+    {
+      "columns": [],
+      "datasource": "$datasource",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 576,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": null,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Value",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "Node",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "node",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "max by (node,nodetype) (\nlabel_replace(\nlabel_replace(\nlabel_replace(kube_node_labels{cluster=\"$Cluster\"}\n    ,\"nodetype\",\"master\",\"label_node_role_kubernetes_io_master\",\"true\")\n    ,\"nodetype\",\"infra\",\"label_node_role_kubernetes_io_infra\",\"true\")\n    ,\"nodetype\",\"compute\",\"label_node_role_kubernetes_io_compute\",\"true\")\n)",
+          "format": "table",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "Nodes",
+      "transform": "table",
+      "type": "table"
+    },
     {
       "cacheTimeout": null,
       "colorBackground": true,
@@ -73,7 +159,7 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 0,
+        "x": 8,
         "y": 0
       },
       "id": 404,
@@ -120,7 +206,7 @@
         }
       ],
       "thresholds": "0,1",
-      "title": "Unhealty nodes",
+      "title": "Node health",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -139,7 +225,7 @@
       "gridPos": {
         "h": 5,
         "w": 8,
-        "x": 4,
+        "x": 12,
         "y": 0
       },
       "id": 444,
@@ -431,7 +517,7 @@
         }
       ],
       "thresholds": "1,2",
-      "title": "CPU usage/request %",
+      "title": "CPU usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -512,7 +598,7 @@
         }
       ],
       "thresholds": "0.8,0.9",
-      "title": "CPU request/allocatable %",
+      "title": "CPU requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -673,7 +759,7 @@
           "expr": "sum(    \n    kube_pod_container_resource_requests_cpu_cores{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}   \n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Request",
+          "legendFormat": "Requests",
           "refId": "E"
         },
         {
@@ -964,7 +1050,7 @@
         }
       ],
       "thresholds": "1,2",
-      "title": "Memory usage/request %",
+      "title": "Memory usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1045,7 +1131,7 @@
         }
       ],
       "thresholds": "0.8,0.9",
-      "title": "Memory request/allocatable %",
+      "title": "Memory requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1206,7 +1292,7 @@
           "expr": "sum(    \n    kube_pod_container_resource_requests_memory_bytes{cluster=\"$Cluster\"}\n    * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}       \n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Request",
+          "legendFormat": "Requests",
           "refId": "E"
         },
         {
@@ -2040,8 +2126,31 @@
   "templating": {
     "list": [
       {
+        "allValue": null,
+        "current": {},
+        "datasource": "$datasource",
+        "definition": "label_values(kube_pod_info,cluster)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "Cluster",
+        "options": [],
+        "query": "label_values(kube_pod_info,cluster)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
         "allValue": "",
         "current": {
+          "tags": [],
           "text": "master + infra + compute",
           "value": [
             "master",
@@ -2076,28 +2185,6 @@
         "type": "custom"
       },
       {
-        "allValue": null,
-        "current": {},
-        "datasource": "$datasource",
-        "definition": "label_values(kube_pod_info,cluster)",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "Cluster",
-        "options": [],
-        "query": "label_values(kube_pod_info,cluster)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
         "current": {
           "text": "prometheus",
           "value": "prometheus"
@@ -2115,7 +2202,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -2146,5 +2233,5 @@
   "timezone": "",
   "title": "Summary by node type",
   "uid": "summary-by-nodetype",
-  "version": 35
+  "version": 40
 }

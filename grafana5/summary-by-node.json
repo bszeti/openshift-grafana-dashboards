@@ -30,6 +30,12 @@
       "id": "table",
       "name": "Table",
       "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": "5.0.0"
     }
   ],
   "annotations": {
@@ -49,7 +55,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1569601225082,
+  "iteration": 1569876294352,
   "links": [],
   "panels": [
     {
@@ -64,6 +70,231 @@
       "panels": [],
       "title": "Totals for selected nodes",
       "type": "row"
+    },
+    {
+      "columns": [],
+      "datasource": "$datasource",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "id": 264,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 2,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Value",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "Node",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "node",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "max by (node,nodetype) (\nlabel_replace(\nlabel_replace(\nlabel_replace(kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}\n    ,\"nodetype\",\"master\",\"label_node_role_kubernetes_io_master\",\"true\")\n    ,\"nodetype\",\"infra\",\"label_node_role_kubernetes_io_infra\",\"true\")\n    ,\"nodetype\",\"compute\",\"label_node_role_kubernetes_io_compute\",\"true\")\n)",
+          "format": "table",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "Selected nodes",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "$datasource",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 8,
+        "y": 1
+      },
+      "id": 362,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 1,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "max by (node,condition)(\n    kube_node_status_condition{status=\"true\",condition!=\"Ready\",node=~\"$node\",cluster=\"$Cluster\"} > 0\n    ) ",
+          "format": "table",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "Node issues",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 197,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{phase}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Pod phase",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "cacheTimeout": null,
@@ -88,7 +319,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 1
+        "y": 6
       },
       "id": 2,
       "interval": null,
@@ -169,7 +400,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 1
+        "y": 6
       },
       "id": 3,
       "interval": null,
@@ -250,7 +481,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 1
+        "y": 6
       },
       "id": 20,
       "interval": null,
@@ -296,7 +527,7 @@
         }
       ],
       "thresholds": "1,2",
-      "title": "CPU usage/request %",
+      "title": "CPU usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -331,7 +562,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 1
+        "y": 6
       },
       "id": 21,
       "interval": null,
@@ -377,7 +608,7 @@
         }
       ],
       "thresholds": "0.80,0.90",
-      "title": "CPU  request/allocatable %",
+      "title": "CPU  requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -412,7 +643,7 @@
         "h": 6,
         "w": 4,
         "x": 16,
-        "y": 1
+        "y": 6
       },
       "id": 52,
       "interval": null,
@@ -481,7 +712,7 @@
         "h": 6,
         "w": 4,
         "x": 20,
-        "y": 1
+        "y": 6
       },
       "id": 7,
       "legend": {
@@ -538,7 +769,7 @@
           "expr": "sum(    \n    kube_pod_container_resource_requests_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}     \n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Request",
+          "legendFormat": "Requests",
           "refId": "E"
         },
         {
@@ -614,7 +845,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 7
+        "y": 12
       },
       "id": 4,
       "interval": null,
@@ -695,7 +926,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 7
+        "y": 12
       },
       "id": 5,
       "interval": null,
@@ -776,7 +1007,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 7
+        "y": 12
       },
       "id": 22,
       "interval": null,
@@ -822,7 +1053,7 @@
         }
       ],
       "thresholds": "1,2",
-      "title": "Memory usage/request %",
+      "title": "Memory usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -857,7 +1088,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 7
+        "y": 12
       },
       "id": 23,
       "interval": null,
@@ -903,7 +1134,7 @@
         }
       ],
       "thresholds": "0.80,0.90",
-      "title": "Memory request/allocatable %",
+      "title": "Memory requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -938,7 +1169,7 @@
         "h": 6,
         "w": 4,
         "x": 16,
-        "y": 7
+        "y": 12
       },
       "id": 53,
       "interval": null,
@@ -1007,7 +1238,7 @@
         "h": 6,
         "w": 4,
         "x": 20,
-        "y": 7
+        "y": 12
       },
       "id": 8,
       "legend": {
@@ -1064,7 +1295,7 @@
           "expr": "sum(    \n    kube_pod_container_resource_requests_memory_bytes{node=~\"$node\",cluster=\"$Cluster\"}       \n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Request",
+          "legendFormat": "Requests",
           "refId": "E"
         },
         {
@@ -1125,9 +1356,9 @@
       "fill": 1,
       "gridPos": {
         "h": 5,
-        "w": 12,
+        "w": 8,
         "x": 0,
-        "y": 13
+        "y": 18
       },
       "id": 38,
       "legend": {
@@ -1224,9 +1455,9 @@
       "fill": 1,
       "gridPos": {
         "h": 5,
-        "w": 8,
-        "x": 12,
-        "y": 13
+        "w": 4,
+        "x": 8,
+        "y": 18
       },
       "id": 86,
       "legend": {
@@ -1317,8 +1548,8 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 20,
-        "y": 13
+        "x": 12,
+        "y": 18
       },
       "id": 147,
       "legend": {
@@ -1372,145 +1603,6 @@
       "yaxes": [
         {
           "format": "percentunit",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "columns": [],
-      "datasource": "$datasource",
-      "fontSize": "100%",
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 0,
-        "y": 18
-      },
-      "id": 264,
-      "links": [],
-      "pageSize": null,
-      "scroll": true,
-      "showHeader": true,
-      "sort": {
-        "col": 1,
-        "desc": true
-      },
-      "styles": [
-        {
-          "alias": "Time",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "hidden"
-        },
-        {
-          "alias": "",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 2,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
-        }
-      ],
-      "targets": [
-        {
-          "expr": "max by (node,condition)(\n    kube_node_status_condition{status=\"true\",condition!=\"Ready\",node=~\"$node\",cluster=\"$Cluster\"} > 0\n    ) ",
-          "format": "table",
-          "instant": true,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "title": "Node issues",
-      "transform": "table",
-      "type": "table"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "fill": 1,
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 8,
-        "y": 18
-      },
-      "id": 197,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{phase}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Pod phase",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
           "label": "",
           "logBase": 1,
           "max": null,
@@ -1631,6 +1723,159 @@
       "type": "row"
     },
     {
+      "content": "<h1 align=\"center\">$node</h1>",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 24
+      },
+      "id": 383,
+      "links": [],
+      "mode": "html",
+      "title": "Node",
+      "type": "text"
+    },
+    {
+      "columns": [],
+      "datasource": "$datasource",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 8,
+        "y": 24
+      },
+      "id": 265,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 1,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "max by (node,condition)(\n    kube_node_status_condition{status=\"true\",condition!=\"Ready\",node=~\"$node\",cluster=\"$Cluster\"} > 0\n    ) ",
+          "format": "table",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "Node issues",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 24
+      },
+      "id": 246,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{phase}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Pod phase",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -1653,7 +1898,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 24
+        "y": 29
       },
       "id": 13,
       "interval": null,
@@ -1734,7 +1979,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 24
+        "y": 29
       },
       "id": 14,
       "interval": null,
@@ -1815,7 +2060,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 24
+        "y": 29
       },
       "id": 24,
       "interval": null,
@@ -1861,7 +2106,7 @@
         }
       ],
       "thresholds": "1,2",
-      "title": "CPU usage/request %",
+      "title": "CPU usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1896,7 +2141,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 24
+        "y": 29
       },
       "id": 25,
       "interval": null,
@@ -1942,7 +2187,7 @@
         }
       ],
       "thresholds": "0.80,0.90",
-      "title": "CPU  request/allocatable %",
+      "title": "CPU  requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1977,7 +2222,7 @@
         "h": 6,
         "w": 4,
         "x": 16,
-        "y": 24
+        "y": 29
       },
       "id": 54,
       "interval": null,
@@ -2046,7 +2291,7 @@
         "h": 6,
         "w": 4,
         "x": 20,
-        "y": 24
+        "y": 29
       },
       "id": 70,
       "legend": {
@@ -2103,7 +2348,7 @@
           "expr": "sum(    \n    kube_pod_container_resource_requests_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}     \n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Request",
+          "legendFormat": "Requests",
           "refId": "E"
         },
         {
@@ -2179,7 +2424,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 30
+        "y": 35
       },
       "id": 16,
       "interval": null,
@@ -2260,7 +2505,7 @@
         "h": 6,
         "w": 4,
         "x": 4,
-        "y": 30
+        "y": 35
       },
       "id": 17,
       "interval": null,
@@ -2341,7 +2586,7 @@
         "h": 6,
         "w": 4,
         "x": 8,
-        "y": 30
+        "y": 35
       },
       "id": 35,
       "interval": null,
@@ -2387,7 +2632,7 @@
         }
       ],
       "thresholds": "1,2",
-      "title": "Memory usage/request %",
+      "title": "Memory usage/requests %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -2422,7 +2667,7 @@
         "h": 6,
         "w": 4,
         "x": 12,
-        "y": 30
+        "y": 35
       },
       "id": 36,
       "interval": null,
@@ -2468,7 +2713,7 @@
         }
       ],
       "thresholds": "0.80,0.90",
-      "title": "Memory request/allocatable %",
+      "title": "Memory requests/allocatable %",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -2503,7 +2748,7 @@
         "h": 6,
         "w": 4,
         "x": 16,
-        "y": 30
+        "y": 35
       },
       "id": 55,
       "interval": null,
@@ -2572,7 +2817,7 @@
         "h": 6,
         "w": 4,
         "x": 20,
-        "y": 30
+        "y": 35
       },
       "id": 71,
       "legend": {
@@ -2629,7 +2874,7 @@
           "expr": "sum(    \n    kube_pod_container_resource_requests_memory_bytes{node=~\"$node\",cluster=\"$Cluster\"}       \n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Request",
+          "legendFormat": "Requests",
           "refId": "E"
         },
         {
@@ -2690,9 +2935,9 @@
       "fill": 1,
       "gridPos": {
         "h": 5,
-        "w": 12,
+        "w": 8,
         "x": 0,
-        "y": 36
+        "y": 41
       },
       "id": 39,
       "legend": {
@@ -2735,7 +2980,7 @@
           "expr": "sum(\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[5m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "Send",
+          "legendFormat": "Transmit",
           "refId": "C"
         }
       ],
@@ -2789,9 +3034,9 @@
       "fill": 1,
       "gridPos": {
         "h": 5,
-        "w": 8,
-        "x": 12,
-        "y": 36
+        "w": 4,
+        "x": 8,
+        "y": 41
       },
       "id": 101,
       "legend": {
@@ -2882,8 +3127,8 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 20,
-        "y": 36
+        "x": 12,
+        "y": 41
       },
       "id": 148,
       "legend": {
@@ -2958,145 +3203,6 @@
       }
     },
     {
-      "columns": [],
-      "datasource": "$datasource",
-      "fontSize": "100%",
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 0,
-        "y": 41
-      },
-      "id": 265,
-      "links": [],
-      "pageSize": null,
-      "scroll": true,
-      "showHeader": true,
-      "sort": {
-        "col": 1,
-        "desc": true
-      },
-      "styles": [
-        {
-          "alias": "Time",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "hidden"
-        },
-        {
-          "alias": "",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 2,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
-        }
-      ],
-      "targets": [
-        {
-          "expr": "max by (node,condition)(\n    kube_node_status_condition{status=\"true\",condition!=\"Ready\",node=~\"$node\",cluster=\"$Cluster\"} > 0\n    ) ",
-          "format": "table",
-          "instant": true,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "title": "Node issues",
-      "transform": "table",
-      "type": "table"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "fill": 1,
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 8,
-        "y": 41
-      },
-      "id": 246,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "{{phase}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Pod phase",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -3144,7 +3250,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk utilization",
+      "title": "Filesystem %",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -3250,7 +3356,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -3281,5 +3387,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "summary-by-node",
-  "version": 24
+  "version": 35
 }
