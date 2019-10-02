@@ -358,7 +358,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(\n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} \n    * on (node) kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}   \n    )    \n/     \nsum(      \n    kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}      \n    )",
+          "expr": "sum(\n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} \n    * on (node) group_left kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}   \n    )    \n/     \nsum(      \n    kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}      \n    )",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -738,21 +738,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
+          "expr": "sum(kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_allocatable_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
+          "expr": "sum(kube_node_status_allocatable_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum(       \n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} * on (node)       \n    (kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"} * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"})    \n)",
+          "expr": "sum(       \n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} * on (node) group_left() \n    (kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"} * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"})    \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Node usage",
@@ -1264,14 +1264,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum( kube_node_status_capacity_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)",
+          "expr": "sum( kube_node_status_capacity_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum( kube_node_status_allocatable_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)\n",
+          "expr": "sum( kube_node_status_allocatable_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)\n",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Allocatable",
@@ -1937,7 +1937,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(\n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} \n    * on (node) kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}   \n    )    \n/     \nsum(      \n    kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}      \n    )",
+          "expr": "sum(\n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} \n    * on (node) group_left kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}   \n    )    \n/     \nsum(      \n    kube_node_status_capacity_cpu_cores{node=~\"$node\",cluster=\"$Cluster\"}      \n    )",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -2317,21 +2317,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
+          "expr": "sum(kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_allocatable_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
+          "expr": "sum(kube_node_status_allocatable_cpu_cores{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}   \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Allocatable",
           "refId": "B"
         },
         {
-          "expr": "sum(       \n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} * on (node)       \n    (kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"} * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"})    \n)",
+          "expr": "sum(       \n    node:node_cpu_utilisation:avg1m{cluster=\"$Cluster\"} * on (node) group_left() \n    (kube_node_status_capacity_cpu_cores{cluster=\"$Cluster\"} * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"})    \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Node usage",
@@ -2843,14 +2843,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum( kube_node_status_capacity_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)",
+          "expr": "sum( kube_node_status_capacity_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Total",
           "refId": "A"
         },
         {
-          "expr": "sum( kube_node_status_allocatable_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)\n",
+          "expr": "sum( kube_node_status_allocatable_memory_bytes{cluster=\"$Cluster\"}   \n    * on (node) group_left kube_node_labels{node=~\"$node\",cluster=\"$Cluster\"}  \n)\n",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Allocatable",
