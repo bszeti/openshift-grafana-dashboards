@@ -1898,7 +1898,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (node) (\n  kube_pod_info{cluster=\"$Cluster\"}\n  * on (namespace, pod) group_left kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}\n  * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum by (node) (\n  node_namespace_pod:kube_pod_info:{cluster=\"$Cluster\"}\n  * on (namespace, pod) group_left kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}\n  * on (node) group_left kube_node_labels{label_node_role_kubernetes_io_$nodetype=\"true\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{node}}",
@@ -2233,5 +2233,5 @@
   "timezone": "",
   "title": "Summary by node type",
   "uid": "summary-by-nodetype",
-  "version": 41
+  "version": 42
 }

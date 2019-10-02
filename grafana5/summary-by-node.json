@@ -248,7 +248,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{phase}}",
@@ -1391,14 +1391,14 @@
           "refId": "A"
         },
         {
-          "expr": "sum (\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum (\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Receive",
           "refId": "B"
         },
         {
-          "expr": "sum (\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum (\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[1m]) \n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Send",
@@ -1827,7 +1827,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum by (phase) (    \n    (\n        kube_pod_status_phase{cluster=\"$Cluster\"}\n        or\n        label_replace ( kube_pod_status_ready{condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{phase}}",
@@ -2970,14 +2970,14 @@
           "refId": "A"
         },
         {
-          "expr": "sum(\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[5m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum(\n    irate(node_network_receive_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[5m]) \n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Receive",
           "refId": "B"
         },
         {
-          "expr": "sum(\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[5m]) \n    * on (namespace, pod) group_left(node) kube_pod_info{node=~\"$node\",cluster=\"$Cluster\"}\n)",
+          "expr": "sum(\n    irate(node_network_transmit_bytes{job=\"node-exporter\",device!~\"veth.+\",cluster=\"$Cluster\"}[5m]) \n    * on (namespace, pod) group_left(node) node_namespace_pod:kube_pod_info:{node=~\"$node\",cluster=\"$Cluster\"}\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Transmit",
@@ -3387,5 +3387,5 @@
   "timezone": "",
   "title": "Summary by node",
   "uid": "summary-by-node",
-  "version": 36
+  "version": 37
 }
