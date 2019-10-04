@@ -43,7 +43,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": null,
-    "iteration": 1570200640178,
+    "iteration": 1570200640181,
     "links": [],
     "panels": [
       {
@@ -634,7 +634,7 @@
         },
         "yaxes": [
           {
-            "format": "decbytes",
+            "format": "bytes",
             "label": null,
             "logBase": 1,
             "max": null,
@@ -711,28 +711,28 @@
             "colorMode": null,
             "colors": [],
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "decimals": 2,
+            "decimals": null,
             "link": false,
             "linkTooltip": "Drill down",
             "linkUrl": "",
             "pattern": "Value #A",
             "thresholds": [],
             "type": "number",
-            "unit": "decbytes"
+            "unit": "bytes"
           },
           {
             "alias": "Memory Requests",
             "colorMode": null,
             "colors": [],
             "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "decimals": 2,
+            "decimals": null,
             "link": false,
             "linkTooltip": "Drill down",
             "linkUrl": "",
             "pattern": "Value #B",
             "thresholds": [],
             "type": "number",
-            "unit": "decbytes"
+            "unit": "bytes"
           },
           {
             "alias": "Memory Requests %",
@@ -760,7 +760,7 @@
             "pattern": "Value #D",
             "thresholds": [],
             "type": "number",
-            "unit": "decbytes"
+            "unit": "bytes"
           },
           {
             "alias": "Memory Limits %",
@@ -787,7 +787,7 @@
             "linkUrl": "/d/pods-in-namespaces/pods-in-namespace?var-datasource=$datasource&var-Namespace=$__cell",
             "pattern": "namespace",
             "thresholds": [],
-            "type": "number",
+            "type": "string",
             "unit": "short"
           },
           {
@@ -986,5 +986,5 @@
     "timezone": "",
     "title": "Namespaces in Cluster",
     "uid": "namespaces-in-cluster",
-    "version": 14
+    "version": 17
   }
