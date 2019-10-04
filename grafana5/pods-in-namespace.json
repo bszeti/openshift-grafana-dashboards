@@ -43,7 +43,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": null,
-    "iteration": 1570164099772,
+    "iteration": 1570200495924,
     "links": [],
     "panels": [
       {
@@ -95,6 +95,92 @@
         "timeRegions": [],
         "timeShift": null,
         "title": "Pod Phase",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "locale",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "$datasource",
+        "fill": 1,
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "id": 10,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum (increase(kube_pod_container_status_restarts_total{namespace=~\"$Namespace\",pod=~\"$Pod\",cluster=~\"$Cluster\"} [1h] )) by (pod) ",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "{{pod}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Pod Restarts",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -871,6 +957,7 @@
         },
         {
           "current": {
+            "selected": true,
             "text": "prometheus",
             "value": "prometheus"
           },
@@ -918,5 +1005,5 @@
     "timezone": "",
     "title": "Pods in Namespace",
     "uid": "pods-in-namespaces",
-    "version": 17
+    "version": 20
   }
