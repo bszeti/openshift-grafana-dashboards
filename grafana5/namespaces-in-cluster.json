@@ -43,16 +43,102 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": null,
-    "iteration": 1570163821034,
+    "iteration": 1570164964802,
     "links": [],
     "panels": [
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "$datasource",
+        "fill": 1,
+        "gridPos": {
+          "h": 5,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "id": 15,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum by (phase) (    \n    ( kube_pod_status_phase{namespace=~\"$Namespace\",cluster=\"$Cluster\"}\n      or\n      label_replace ( kube_pod_status_ready{namespace=~\"$Namespace\",condition=\"true\",cluster=\"$Cluster\"}, \"phase\",\"Ready\",\"\",\"\" )\n    )\n) ",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "{{phase}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Pod Phase",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "locale",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
       {
         "collapsed": false,
         "gridPos": {
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 0
+          "y": 5
         },
         "id": 11,
         "panels": [],
@@ -66,12 +152,12 @@
         "dashLength": 10,
         "dashes": false,
         "datasource": "$datasource",
-        "fill": 0,
+        "fill": 1,
         "gridPos": {
-          "h": 7,
-          "w": 24,
+          "h": 6,
+          "w": 12,
           "x": 0,
-          "y": 1
+          "y": 6
         },
         "id": 6,
         "legend": {
@@ -148,20 +234,6 @@
         }
       },
       {
-        "collapsed": false,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 8
-        },
-        "id": 12,
-        "panels": [],
-        "repeat": null,
-        "title": "CPU Quota",
-        "type": "row"
-      },
-      {
         "aliasColors": {},
         "bars": false,
         "columns": [],
@@ -171,10 +243,10 @@
         "fill": 1,
         "fontSize": "100%",
         "gridPos": {
-          "h": 7,
-          "w": 24,
-          "x": 0,
-          "y": 9
+          "h": 6,
+          "w": 12,
+          "x": 12,
+          "y": 6
         },
         "id": 7,
         "legend": {
@@ -204,7 +276,7 @@
         "showHeader": true,
         "sort": {
           "col": 3,
-          "desc": true
+          "desc": false
         },
         "spaceLength": 10,
         "stack": false,
@@ -402,7 +474,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 16
+          "y": 12
         },
         "id": 13,
         "panels": [],
@@ -416,12 +488,12 @@
         "dashLength": 10,
         "dashes": false,
         "datasource": "$datasource",
-        "fill": 0,
+        "fill": 1,
         "gridPos": {
-          "h": 7,
-          "w": 24,
+          "h": 6,
+          "w": 12,
           "x": 0,
-          "y": 17
+          "y": 13
         },
         "id": 8,
         "legend": {
@@ -498,20 +570,6 @@
         }
       },
       {
-        "collapsed": false,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 24
-        },
-        "id": 14,
-        "panels": [],
-        "repeat": null,
-        "title": "Memory Requests",
-        "type": "row"
-      },
-      {
         "aliasColors": {},
         "bars": false,
         "columns": [],
@@ -521,10 +579,10 @@
         "fill": 1,
         "fontSize": "100%",
         "gridPos": {
-          "h": 7,
-          "w": 24,
-          "x": 0,
-          "y": 25
+          "h": 6,
+          "w": 12,
+          "x": 12,
+          "y": 13
         },
         "id": 9,
         "legend": {
@@ -842,5 +900,5 @@
     "timezone": "",
     "title": "Namespaces in Cluster",
     "uid": "namespaces-in-cluster",
-    "version": 5
+    "version": 10
   }
