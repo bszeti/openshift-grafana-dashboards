@@ -33,10 +33,10 @@ Repeated panels:
 
 This panel only works if the standard OpenShift labels are used on the nodes (e.g. _node-role.kubernetes.io/compute=true_). By default it shows _master_, _infra_ and _compute_ node groups, but if additional node roles exist, you simply have to add them to the list in _$nodetype_ dasboard variable.
 
-![Summary by node](images/summary-by-node-1.png "Summary by node")
-![Summary by node](images/summary-by-node-2.png "Summary by node")
+![Summary by nodetype](images/summary-by-node-1.png "Summary by node")
+![Summary by nodetype](images/summary-by-node-2.png "Summary by node")
 
-## Summary by nodetype
+## Summary by node
 
 The dashboard have two sections:
 * Summary resource utilization including all selected nodes
