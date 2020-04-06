@@ -81,5 +81,6 @@ Panels:
 
 * **dashboards**: Grafana dashboard that can be manually imported or provisioned from file. They require a Prometheus datasource which should be selected as the _$datasource_ dasboard variable. Tested with Grafana v5.4.3 and v6.3.3.
 * **dashboards-with-cluster-select**: The same dashboards with an extra _$cluster_ variable. It's useful if Prometheus is collecting matrrics from more than one cluster. See [Prometheus Federation](https://prometheus.io/docs/prometheus/latest/federation/).
+* **dashboards-cluster-overview**: Cluster overview page showing overall health of multiple clusters.
 * **scripts**: simply run _deploy.sh_ to install a Grafana in the existing _openshift-monitoring_ namespace with the custom dasboards provisioned from a ConfigMap.
 * **images**: Screenshots for README
