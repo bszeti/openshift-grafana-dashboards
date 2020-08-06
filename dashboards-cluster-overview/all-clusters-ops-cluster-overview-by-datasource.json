@@ -1000,7 +1000,7 @@
           "value": "prometheus"
         },
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": null,
         "multi": false,
         "name": "datasource",
